@@ -1,4 +1,6 @@
 import styled from "styled-components";
+import { Button } from '@material-ui/core';
+
 
 export const Wrapper = styled.div`
   margin: 0 auto;
@@ -57,4 +59,13 @@ export const TableCell = styled.td`
       box-shadow: 0 0 5px 0 rgba(206, 40, 40, 0.5);
     }
   }
+`;
+
+export const ButtonStyle =  styled(Button)`
+  margin-top: 10px;
+  margin-left: 10px !important;
+  margin-right: 10px !important;
+  background-color:#E5E7E9 !important;
+  
+
 `;
