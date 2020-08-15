@@ -9,15 +9,16 @@ import { Button } from '@material-ui/core';
 
 class App extends React.Component {
 
-  state={
-    grid:[],
-    count:0
+  state = {
+    grid: [],
+    rowsCount: 1,
+    colsCount: 1
   }
 
 
   componentWillMount() {
     console.log(data)
-    this.generateGrid(data)
+    // this.generateGrid(data)
   }
 
 
@@ -29,7 +30,7 @@ class App extends React.Component {
 
     for (let i = 0; i < columnData.length; i++) {
       if (i == 0) {
-        grid.push([{ value: "Price Chart" }, ...rowData.map((val) => { return { value: val } })])
+        grid.push([{ value: "Price Chart", readOnly: true }, ...rowData.map((val) => { return { value: val } })])
       }
       let gridCol = []
       for (let j = 0; j < rowData.length; j++) {
@@ -81,48 +82,104 @@ class App extends React.Component {
   }
 
 
-  
+  increaseCountRows = () => {
+    if (this.state.rowsCount !== 0) {
+      this.setState({ rowsCount: this.state.rowsCount + 1 })
+    } else {
+      alert("should not be lessthen zero")
+    }
+  }
+
+  descreseCountRows = () => {
+
+    if (this.state.rowsCount !== 1) {
+      this.setState({ rowsCount: this.state.rowsCount - 1 })
+    } else {
+      alert("should not be lessthen zero")
+    }
+
+  }
+  increaseCountCols = () => {
+    if (this.state.colsCount !== 0) {
+      this.setState({ colsCount: this.state.colsCount + 1 })
+    } else {
+      alert("should not be lessthen zero")
+    }
+
+  }
+
+  descreseCountCols = () => {
+    if (this.state.colsCount !== 1) {
+      this.setState({ colsCount: this.state.colsCount - 1 })
+    } else {
+      alert("should not be lessthen zero")
+    }
+  }
+
+
+
+
+
   render() {
-    if(this.state.grid.length !== 0){
-    return (
-      <Wrapper>
-        <ReactDataSheet
-          data={this.state.grid}
-          valueRenderer={(cell) => cell.value}
-          onCellsChanged={changes => {
-            const grid = this.state.grid.map(row => [...row])
-            changes.forEach(({ cell, row, col, value }) => {
-              const validated = cell.format === 'number' ? parseFloat(value) : value
-              grid[row][col] = { ...grid[row][col], value: validated }
-            })
-            this.setState({ grid })
-          }}
-          sheetRenderer={SomeWrapper}
-          cellRenderer={TableCell}
-          rowRenderer={TableRow}
-        />
-        <button onClick={this.handleSubmit}>Submit</button>
-      </Wrapper>
-    );
+    if (this.state.grid.length !== 0) {
+      return (
+        <Wrapper>
+          <div className="App"><b> Price chart table</b></div>
+          <ReactDataSheet
+            data={this.state.grid}
+            valueRenderer={(cell) => cell.value}
+            onCellsChanged={changes => {
+              const grid = this.state.grid.map(row => [...row])
+              changes.forEach(({ cell, row, col, value }) => {
+                const validated = cell.format === 'number' ? parseFloat(value) : value
+                grid[row][col] = { ...grid[row][col], value: validated }
+              })
+              this.setState({ grid })
+            }}
+            sheetRenderer={SomeWrapper}
+            cellRenderer={TableCell}
+            rowRenderer={TableRow}
+          />
+          <Button onClick={this.handleSubmit} style={{ backgroundColor: "gray", color: "white", marginTop: "10px" }}>Submit</Button>
+        </Wrapper>
+      );
+    }
+    else {
+      return (
+        <>
+          <div className="App"><b>Please Add Price chart table</b></div>
+          <div className="App">
+            <div style={{ marginBottom: "10px" }}>
+              Rows : <Button
+                style={{ backgroundColor: "gray", color: "white", marginLeft: "10px", marginRight: "10px" }}
+                onClick={this.increaseCountRows}
+              >( + )</Button>
+              {this.state.rowsCount}
+              <Button
+                style={{ backgroundColor: "gray", color: "white", marginLeft: "10px" }}
+                onClick={this.descreseCountRows}
+              >( - )</Button>
+            </div>
+               Cols : <Button
+              style={{ backgroundColor: "gray", color: "white", marginLeft: "10px", marginRight: "10px" }}
+              onClick={this.increaseCountCols}
+            >( + )</Button>
+            {this.state.colsCount}
+            <Button
+              style={{ backgroundColor: "gray", color: "white", marginLeft: "10px" }}
+              onClick={this.descreseCountCols}
+            >( - )</Button>
+            <div className="App">
+              <Button
+                style={{ backgroundColor: "gray", color: "white", marginLeft: "10px" }}
+
+              >Submit</Button>
+            </div>
+          </div>
+        </>
+
+      )
+    }
   }
-  else{
-    return(
-      <>
-      <div className="App"><b>Please Add Price chart table</b></div>
-      <div className="App">
-        <div style={{marginBottom:"10px"}}>
-     Rows : <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px",marginRight:"10px"}}>( + )</Button>
-       {this.state.count}
-            <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px"}}>( - )</Button>
-        </div>
-   Cols : <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px",marginRight:"10px"}}>( + )</Button>
-       {this.state.count}
-            <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px"}}>( - )</Button>
-      </div>
-      </>
-    
-    )
-  }
-}
 }
 export default App;
