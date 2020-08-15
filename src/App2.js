@@ -4,15 +4,10 @@ import ReactDataSheet from 'react-datasheet';
 import 'react-datasheet/lib/react-datasheet.css';
 import { Wrapper, SomeWrapper, TableRow, TableCell } from "./ui";
 import data from './api';
-import { Button } from '@material-ui/core';
+
 
 
 class App extends React.Component {
-
-  state={
-    grid:[],
-    count:0
-  }
 
 
   componentWillMount() {
@@ -23,26 +18,46 @@ class App extends React.Component {
 
 
   generateGrid = (data) => {
-    let grid = [];
+    let grid = []
     let rowData = [...new Set(data.map(d => d.feature1))].sort();
     let columnData = [...new Set(data.map(d => d.feature2))].sort();
-
-    for (let i = 0; i < columnData.length; i++) {
-      if (i == 0) {
-        grid.push([{ value: "Price Chart" }, ...rowData.map((val) => { return { value: val } })])
-      }
+    // row data 
+    let gridRowData = [];
+    rowData.map((item) => {
+      gridRowData.push({
+        value: item
+      })
+    })
+    // // column data
+    let gridColumnData = []
+    let originData = [{ value: "Price Chart" }]
+    columnData.map((item) => {
+      gridColumnData.push([{
+        value: item
+      }])
+    })
+    // // final object
+    let a = originData.concat(gridRowData)
+    grid = [a];
+    gridColumnData.map((item) => {
+      grid.push(item)
+    })
+    for (let i = 0; i < rowData.length; i++) {
       let gridCol = []
-      for (let j = 0; j < rowData.length; j++) {
-        if (j == 0) {
-          gridCol.push({ value: columnData[i] })
-        }
+      for (let j = 0; j < columnData.length; j++) {
         const gridVal = data.filter(obj => obj.feature1 == rowData[j] && obj.feature2 == columnData[i])
-        gridCol.push({ value: gridVal.length > 0 ? gridVal[0].price : "null" })
+        grid[i + 1].push({
+          value: gridVal[0].price
+        })
       }
       grid.push(gridCol)
     }
     this.setState({ grid })
   }
+
+
+
+
 
 
 
@@ -58,12 +73,15 @@ class App extends React.Component {
       return column;
     }
     getCol(newArray, 0)
+
     // get row data
     let row = newArray[0].filter((row, index) => {
       return row.value
     })
+
+    // request format
+    let priceChartRequest = []
     const exp = () => {
-      let priceChartRequest = []
       for (let i = 0; i <= row.length - 1; i++) {
         for (let j = 0; j <= row.length - 1; j++) {
           if (i > 0 && j > 0) {
@@ -75,15 +93,18 @@ class App extends React.Component {
           }
         }
       }
-      console.log(priceChartRequest)
     }
     exp()
+    console.log(priceChartRequest)
+
   }
 
 
-  
+
+
+
+
   render() {
-    if(this.state.grid.length !== 0){
     return (
       <Wrapper>
         <ReactDataSheet
@@ -105,24 +126,5 @@ class App extends React.Component {
       </Wrapper>
     );
   }
-  else{
-    return(
-      <>
-      <div className="App"><b>Please Add Price chart table</b></div>
-      <div className="App">
-        <div style={{marginBottom:"10px"}}>
-     Rows : <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px",marginRight:"10px"}}>( + )</Button>
-       {this.state.count}
-            <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px"}}>( - )</Button>
-        </div>
-   Cols : <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px",marginRight:"10px"}}>( + )</Button>
-       {this.state.count}
-            <Button style={{backgroundColor:"gray",color:"white",marginLeft:"10px"}}>( - )</Button>
-      </div>
-      </>
-    
-    )
-  }
-}
 }
 export default App;
