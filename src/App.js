@@ -16,14 +16,14 @@ class App extends React.Component {
 
 
   componentWillMount() {
-    // console.log(data)
-    // this.generateGrid(data)
+    console.log(data)
+    this.generateGrid(data)
   }
 
-  componentDidUpdate(){
-   if(this.state.grid && this.state.grid.length !== 0){
-     this.state.grid[0][0] = {value:"Price chart", readOnly: true }
-   }
+  componentDidUpdate() {
+    if (this.state.grid && this.state.grid.length !== 0) {
+      this.state.grid[0][0] = { value: "Price chart", readOnly: true }
+    }
   }
 
 
@@ -56,6 +56,7 @@ class App extends React.Component {
 
 
   handleSubmit = () => {
+
     // get column data
     let newArray = this.state.grid;
     var column = [];
@@ -66,13 +67,19 @@ class App extends React.Component {
       return column;
     }
     getCol(newArray, 0)
+
     // get row data
     let row = newArray[0].filter((row, index) => {
       return row.value
     })
+
+    console.log(column)
+    console.log(row)
     const exp = () => {
       let priceChartRequest = []
       for (let i = 0; i <= row.length - 1; i++) {
+        console.log(row[i])
+        console.log(column[i])
         for (let j = 0; j <= row.length - 1; j++) {
           if (i > 0 && j > 0) {
             priceChartRequest.push({
@@ -128,17 +135,17 @@ class App extends React.Component {
   createPriceChart = () => {
     // console.log(this.state.rowsCount, this.state.colsCount)
     // if (this.state.rowsCount === this.state.colsCount) {
-      let rows = this.state.rowsCount;
-      let columns = this.state.colsCount;
-      let grid = [];
-      for (let i = 0; i <= rows - 1; i++) {
-        let gridCol = []
-        for (let j = 0; j <= columns - 1; j++) {
-          gridCol.push({ value: "" })
-        }
-        grid.push(gridCol)
+    let rows = this.state.rowsCount;
+    let columns = this.state.colsCount;
+    let grid = [];
+    for (let i = 0; i <= rows - 1; i++) {
+      let gridCol = []
+      for (let j = 0; j <= columns - 1; j++) {
+        gridCol.push({ value: "" })
       }
-      this.setState({ grid })
+      grid.push(gridCol)
+    }
+    this.setState({ grid })
     // } else {
     //   alert("rows and columns should be equal")
     // }
