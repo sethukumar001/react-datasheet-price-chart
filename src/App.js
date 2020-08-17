@@ -13,8 +13,8 @@ class App extends React.Component {
 
   state = {
     grid: [],
-    rowsCount: 4,
-    colsCount: 4
+    rowsCount: 2,
+    colsCount: 2
   }
 
 
@@ -73,9 +73,13 @@ class App extends React.Component {
     let row = newArray[0].filter((row, index) => {
       return row.value
     })
+    console.log(column)
+    console.log(row)
     const exp = () => {
       let priceChartRequest = []
-      for (let i = 0; i <= row.length - 1; i++) {
+      console.log(column.length)
+      console.log(row.length)
+      for (let i = 0; i <= column.length - 1; i++) {
         for (let j = 0; j <= row.length - 1; j++) {
           if (i > 0 && j > 0) {
             priceChartRequest.push({
@@ -97,35 +101,33 @@ class App extends React.Component {
 
 
   increaseCountRows = () => {
-    if (this.state.rowsCount !== 3) {
-      this.setState({ rowsCount: this.state.rowsCount + 1 })
-    } else {
-      alert("should not be lessthen 4")
-    }
+    // if (this.state.rowsCount !== 3) {
+    this.setState({ rowsCount: this.state.rowsCount + 1 })
+    // } else {
+    //   alert("should not be lessthen 4")
+    // }
   }
   descreseCountRows = () => {
-    if (this.state.rowsCount !== 4) {
-      this.setState({ rowsCount: this.state.rowsCount - 1 })
-    } else {
-      alert("should not be lessthen 4")
-    }
+    // if (this.state.rowsCount !== 4) {
+    this.setState({ rowsCount: this.state.rowsCount - 1 })
+    // } else {
+    //   alert("should not be lessthen 4")
+    // }
   }
   increaseCountCols = () => {
-    if (this.state.colsCount !== 3) {
-      this.setState({ colsCount: this.state.colsCount + 1 })
-    } else {
-      alert("should not be lessthen 4")
-    }
+    // if (this.state.colsCount !== 3) {
+    this.setState({ colsCount: this.state.colsCount + 1 })
+    // } else {
+    //   alert("should not be lessthen 4")
+    // }
   }
   descreseCountCols = () => {
-    if (this.state.colsCount !== 4) {
-      this.setState({ colsCount: this.state.colsCount - 1 })
-    } else {
-      alert("should not be lessthen 4")
-    }
+    // if (this.state.colsCount !== 4) {
+    this.setState({ colsCount: this.state.colsCount - 1 })
+    // } else {
+    //   alert("should not be lessthen 4")
+    // }
   }
-
-
 
 
 

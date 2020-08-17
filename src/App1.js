@@ -15,23 +15,23 @@ class App extends React.Component {
 
   }
 
-componentWillMount(){
-console.log(data)
-this.generateGrid(4,4)
-}
-
-generateGrid = (row,col) => {
-  let grid = []
-  for (let i=0; i< row; i++){
-   let gridCol = []
-    for (let j=0; j<col; j++){
-      gridCol.push({value: ""})
-    }
-    grid.push(gridCol)
+  componentWillMount() {
+    console.log(data)
+    this.generateGrid(4, 4)
   }
-  grid[0][0] = "Price Chart";
- this.setState({grid})
-}
+
+  generateGrid = (row, col) => {
+    let grid = []
+    for (let i = 0; i < row; i++) {
+      let gridCol = []
+      for (let j = 0; j < col; j++) {
+        gridCol.push({ value: "" })
+      }
+      grid.push(gridCol)
+    }
+    grid[0][0] = "Price Chart";
+    this.setState({ grid })
+  }
 
 
   componentDidMount() {
@@ -73,10 +73,10 @@ generateGrid = (row,col) => {
     })
 
     // to get column and row data only
-    this.setState({grid})
+    this.setState({ grid })
     for (let i = 0; i <= rowData.length - 1; i++) {
       for (let j = 0; j <= columnData.length - 1; j++) {
-        const gridVal = data.filter(obj => obj.feature1 == rowData[j] && obj.feature2== columnData[i])
+        const gridVal = data.filter(obj => obj.feature1 == rowData[j] && obj.feature2 == columnData[i])
         grid[i + 1].push({
           value: gridVal[0].price
         })
