@@ -3,6 +3,8 @@ import './App.css';
 import ReactDataSheet from 'react-datasheet';
 import { Wrapper, SomeWrapper, TableRow, TableCell, ButtonStyle } from "./ui";
 import data from './api';
+import 'react-datasheet/lib/react-datasheet.css';
+
 
 // react-csv to download
 
